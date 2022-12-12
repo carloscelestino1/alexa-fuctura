@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Eventos{% endblock %}
+
+{% block content %}
+<div class="offset-1 col-10 list-div">
+    <div class="container dashboard">
+        <div class="col-4 dashboard-box" id="dashboard-lastdays">
+            <h4>Eventos ativos</h4>
+            <span>{{ eventosrecently }}</span>
+        </div>
+        
+        <div class="col-4 dashboard-box" id="dashboard-doing">
+            <h4>Eventos inativos</h4>
+            <span>{{ eventosdoing }}</span>
+        </div>
+    </div>
+    <a id="add-link" href="newevento/">
+        <div class="col-2 add-div">
+            <i class="fas fa-plus"></i> Adicionar evento
+        </div>
+    </a>
+    <div class="col-9 search-div">
+        <form method="GET" id="search-form">
+            <input class="form-control" type="text" id="search" name="search" placeholder="Digite o nome do evento para buscar..." value="{{ request.GET.search }}">
+            <i class="fas fa-search" id="search-btn"></i>
+        </form>
+    </div>
+    <div class="col-12 filter-div">
+        <span>Filtrar por:</span>
+        <select name="filter" id="filter" class="form-control">
+            <option value="">Escolha uma opção...</option>
+            <option value="inativo">eventos ativos</option>
+            <option value="ativo">eventos inativos</option>
+        </select>
+    </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <ul class="evento-list">
+        {% for evento in eventos %}
+        {% if evento.status == 'ativo' %}
+            <li class="evento-item">
+        {% else %}
+            <li class="evento-item inativo">
+        {% endif %}
+                <span><a href="/evento/{{evento.id}}">{{evento.data}}</a></span>
+                <a href="delete/{{evento.id}}" class="delete-btn"><span><i class="fas fa-trash"></i></span></a>
+                <a href="edit/{{evento.id}}"><span><i class="fas fa-edit"></i></span></a>
+                <a href="event/{{evento.id}}"><span><i class="fas fa-video"></i>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="pagination">
+        <span class="step-links">
+            {% if eventos.has_previous %}
+                <a href="?page={{ eventos.previous_page_number }}"><i class="fas fa-arrow-left"></i></a>
+            {% endif %}
+            
+            {% if eventos.paginator.num_pages %}
+            <span class="current">
+                {{ eventos.number }} de {{ eventos.paginator.num_pages }}
+            </span>
+            {% endif %}
+        
+            {% if eventos.has_next %}
+                <a href="?page={{ eventos.next_page_number }}"><i class="fas fa-arrow-right"></i></a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}
