@@ -5,7 +5,9 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from  django.contrib.auth.decorators import login_required
 import datetime
-
+#api
+from rest_framework import viewsets
+from .serializers import EventoSerializer
 
 
 @login_required
@@ -74,3 +76,11 @@ def deleteEvento(request, id):
     evento.delete()
     messages.info(request,'evento deletado com sucesso.')
     return redirect('/')
+
+
+
+#api
+
+class EventoViewSet(viewsets.ModelViewSet):
+    queryset = Evento.objects.all()
+    serializer_class = EventoSerializer
