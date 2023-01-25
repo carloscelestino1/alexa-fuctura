@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Evento
+from .models import Agenda
 from .forms import EventoForm
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -15,29 +15,24 @@ def eventoList(request):
     
     search = request.GET.get('search')
     filter = request.GET.get('filter')
-    eventosDoneRecently = Evento.objects.filter(updated_at__gt=datetime.datetime.now()-datetime.timedelta(days=30)).count()
-    eventosDoing = Evento.objects.filter(user=request.user).count()
+    eventosDoneRecently = Agenda.objects.filter(updated_at__gt=datetime.datetime.now()-datetime.timedelta(days=30)).count()
+    eventosDoing = Agenda.objects.filter(user=request.user).count()
     
     
 
-    if search:
-        eventos = Evento.objects.filter(name__icontains=search, user=request.user)
-    elif filter:
-        eventos = Evento.objects.filter(status=filter, user=request.user)
-    else:
-        eventos_list = Evento.objects.all().order_by('-created_at').filter(user=request.user)
 
-        paginator = Paginator(eventos_list, 5)
+    eventos_list = Agenda.objects.all().order_by('-created_at')
+    paginator = Paginator(eventos_list, 5)
 
-        page = request.GET.get('page')
-        tasks = paginator.get_page(page)
+    page = request.GET.get('page')
+    tasks = paginator.get_page(page)
     
     return render(request, 'main/list.html', 
         {'eventos':tasks, 'eventosrecently': eventosDoneRecently,  'eventosdoing': eventosDoing })
 
 @login_required
 def eventoView(request, id):
-    evento = get_object_or_404(Evento, pk=id)
+    evento = get_object_or_404(Agenda, pk=id)
     return render(request, 'main/evento.html', {'evento': evento})
 
 @login_required
@@ -56,7 +51,7 @@ def newEvento(request):
 
 @login_required
 def editEvento(request, id):
-    evento = get_object_or_404(Evento, pk=id)
+    evento = get_object_or_404(Agenda, pk=id)
     form = EventoForm(instance=evento)
 
     if(request.method == 'POST'):
@@ -72,7 +67,7 @@ def editEvento(request, id):
 
 @login_required
 def deleteEvento(request, id):
-    evento = get_object_or_404(Evento, pk=id)
+    evento = get_object_or_404(Agenda, pk=id)
     evento.delete()
     messages.info(request,'evento deletado com sucesso.')
     return redirect('/')
@@ -82,5 +77,5 @@ def deleteEvento(request, id):
 #api
 
 class EventoViewSet(viewsets.ModelViewSet):
-    queryset = Evento.objects.all()
+    queryset = Agenda.objects.all()
     serializer_class = EventoSerializer

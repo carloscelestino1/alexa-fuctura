@@ -20,6 +20,14 @@ $(document).ready(function() {
 
     });
 
+    $(document).on("keydown", "#TxtObservacoes", function () {
+        var caracteresRestantes = 500;
+        var caracteresDigitados = parseInt($(this).val().length);
+        var caracteresRestantes = caracteresRestantes - caracteresDigitados;
+    
+        $(".caracteres").text(caracteresRestantes);
+    });
+
     $(sttbtn).on('click', function(e) {
 
         e.preventDefault();

@@ -1,6 +1,6 @@
 
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 
 {% block nome %}Adicione um evento{% endblock %}
 
@@ -9,8 +9,15 @@
     <h1>Informações do evento:</h1>
     <form method="POST">
         {% csrf_token %}
-        {{ form|crispy }}
+        {% for field in form.visible_fields %}
+        <div class="form-group">
+            <label for="{{field.id_for_label}}">{{field.label}}</label>
+            {{field|add_class:'form-control'}}
+            <span class="caracteres">500</span><br>
+        </div>
+        {% endfor %}
         <input type="submit" class="btn btn-success" value="Salvar">
     </form>
 </div>
+
 {% endblock %}

@@ -10,9 +10,9 @@
             <h4 class="card-title text-center">Bem-vindo</h4>
             <form method="POST">
                 {%csrf_token%}
+                {{ form|crispy }}
                 <input type="hidden" name="next" value="{{ next }}">
 
-                {{ form|crispy }}
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
             <a class="change-form-p" href="/accounts/register">Criar conta</a>

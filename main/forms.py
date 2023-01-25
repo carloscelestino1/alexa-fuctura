@@ -1,19 +1,12 @@
 from django import forms
-from .models import Evento
+from .models import Agenda
 
 
 class EventoForm(forms.ModelForm):
-    data = forms.DateTimeField(
-        label='Início do evento',
-        widget=forms.DateTimeInput(
-            format='%Y-%m-%d T%H:%M',
-            attrs={
-                'type': 'datetime-local',
-            }),
-        input_formats=('%Y-%m-%d T%H:%M',))
+    descricao = forms.CharField(widget=forms.TextInput(attrs={'id':"TxtObservacoes"}))
 
     class Meta:
-        model = Evento
-        fields = ('data', 'descricao', 'link')
+        model = Agenda
+        fields = ('descricao',)
 
 
