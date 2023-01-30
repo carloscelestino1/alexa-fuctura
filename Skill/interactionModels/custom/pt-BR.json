@@ -1,0 +1,64 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "comunidade ibal",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "ajudar",
+            "me ajude",
+            "ajuda"
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "samples": []
+        },
+        {
+          "name": "RadioIntent",
+          "slots": [],
+          "samples": [
+            "tocar rádio ibal",
+            "rádio ibal",
+            "tocar rádio",
+            "rádio"
+          ]
+        },
+        {
+          "name": "AgendaIntent",
+          "slots": [],
+          "samples": [
+            "abra agenda",
+            "abra agenda ibal",
+            "agenda ibal",
+            "eventos",
+            "agenda"
+          ]
+        }
+      ],
+      "types": []
+    }
+  },
+  "version": "5"
+}
